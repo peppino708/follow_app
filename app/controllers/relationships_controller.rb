@@ -1,15 +1,15 @@
 class RelationshipsController < ApplicationController
   before_action :authenticate_user!
   def create
-    following = current_user.relationships.build(follower_id: params[:user_id])
-    follwing.save
+    following = current_user.active_relationships.build(follower_id: params[:user_id])
+    following.save
     # request.referrerと書くことによって、以前のパスに戻ることができる
     redirect_to request.referrer || root_path
   end
 
   def destroy
-    following = current_user.relationships.find_by(follower_id: params[:user_id])
-    follwing.destroy
+    following = current_user.active_relationships.find_by(follower_id: params[:user_id])
+    following.destroy
     # request.referrerと書くことによって、以前のパスに戻ることができる
     redirect_to request.referrer || root_path
   end
