@@ -12,4 +12,8 @@ class User < ApplicationRecord
   has_many :passive_relationships, foreign_key: :follower_id, class_name: "Relationship", dependent: :destroy
   # フォローされる側からフォローしているユーザを取得する
   has_many :followers, through: :passive_relationships, source: :following
+  
+  def is_followed_by?(user)
+    passive_relationships.find_by(following_id: user.id).present?
+  end
 end
